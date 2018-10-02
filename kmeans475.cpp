@@ -117,7 +117,7 @@ public:
 		//parallel_for version
 		indexSearch = -1;
 		//version 1		
-		/*tbb::parallel_for(0,total_points, [=,&indexSearch](int i){				
+		tbb::parallel_for(0,total_points, [=,&indexSearch](int i){				
 			if(points[i].getID() == id_point)
 			{				
 				indexSearch = i;		
@@ -125,19 +125,22 @@ public:
 				tbb::task::self().cancel_group_execution();			
 			}
 		});
+		/*
 		//version 2
 		bool stop = false;
-		tbb::parallel_for(cancelable_range<int>(0,total_points,1,stop), searchBody<Point>(points,id_point));		
+		tbb::parallel_for(cancelable_range<int>(0,total_points,1,stop), searchBody<Point>(points,id_point));	
+		*/	
+		//v1 v2
 		if (indexSearch == -1)
 			return false;
 		//return false;
 		points.erase(points.begin() + indexSearch);
 		return true;
-		*/
+		
 		
 		//parallel_reduce version
 		
-		int index = 
+		/*int index = 
 		tbb::parallel_reduce(tbb::blocked_range<int>(0, total_points), 
 		-1, 
 		[=](const tbb::blocked_range<int>& r, int index)->int{
@@ -158,7 +161,7 @@ public:
 		if (index == -1)
 			return false;
 		points.erase(points.begin() + index);
-		return true;
+		return true;*/
 		/*
 		for(int i = 0; i < total_points; i++)
 		{
