@@ -216,13 +216,13 @@ private:
 		double sum = 0.0, min_dist;
 		int id_cluster_center = 0;
 		
-		/*for(int i = 0; i < total_values; i++)
+		for(int i = 0; i < total_values; i++)
 		{
 			sum += pow(clusters[0].getCentralValue(i) -
 					   point.getValue(i), 2.0);
-		}*/
+		}
 		//SSE
-		sum = distance(clusters[0].getCentralValue(), point.getValue());
+		//sum = distance(clusters[0].getCentralValue(), point.getValue());
 
 
 		min_dist = sqrt(sum);
@@ -232,13 +232,13 @@ private:
 			double dist;
 			sum = 0.0;
 			
-			/*for(int j = 0; j < total_values; j++)
+			for(int j = 0; j < total_values; j++)
 			{
 				sum += pow(clusters[i].getCentralValue(j) -
 						   point.getValue(j), 2.0);
-			}*/
+			}
 			//sse
-			sum = distance(clusters[i].getCentralValue(), point.getValue());
+			//sum = distance(clusters[i].getCentralValue(), point.getValue());
 			dist = sqrt(sum);
 
 			if(dist < min_dist)
@@ -305,6 +305,7 @@ public:
 		
 		for(int i = 0; i < K; i++)
 		{
+			/*
 			while(true)
 			{
 				int index_point = rand() % total_points;
@@ -318,7 +319,11 @@ public:
 					clusters.push_back(cluster);
 					break;
 				}
-			}
+			}*/
+			//set 0-K nodes as initial nodes for test
+			points[i].setCluster(i);
+			Cluster cluster(i, points[index_point]);
+			clusters.push_back(cluster);
 		}
         auto end_phase1 = chrono::high_resolution_clock::now(); 
         
@@ -394,6 +399,22 @@ public:
 					}
 				});
 			});*/
+			//parallel_for (K)
+			/*tbb::parallel_for(0, K, [&](int i){
+				for(int j = 0; j < total_values; j++)
+				{
+					int total_points_cluster = clusters[i].getTotalPoints();
+					double sum = 0.0;
+
+					if(total_points_cluster > 0)
+					{
+						
+						for(int p = 0; p < total_points_cluster; p++)
+							sum += clusters[i].getPoint(p).getValue(j);
+						clusters[i].setCentralValue(j, sum / total_points_cluster);
+					}
+				}
+			});	*/	
 			
 
 			
