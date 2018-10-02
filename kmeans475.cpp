@@ -322,7 +322,7 @@ public:
 			}*/
 			//set 0-K nodes as initial nodes for test
 			points[i].setCluster(i);
-			Cluster cluster(i, points[index_point]);
+			Cluster cluster(i, points[i]);
 			clusters.push_back(cluster);
 		}
         auto end_phase1 = chrono::high_resolution_clock::now(); 

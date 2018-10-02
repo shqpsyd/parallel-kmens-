@@ -13,7 +13,7 @@ for i in range(A):
 	for j in range(B):
 		temp.append(random.random())
 	nodes.append(temp)
-with open ("dataset3.txt",'w') as file :
+with open (sys.argv[6],'w') as file :
 	file.write(" ".join(sys.argv[1:]))
 	file.write("\n")
 	for node in nodes:
